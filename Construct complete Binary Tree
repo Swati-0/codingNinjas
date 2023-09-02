@@ -1,0 +1,45 @@
+#include <bits/stdc++.h> 
+/*********************************************
+
+    Following is the Tree Node structure 
+ 
+    template <typename T>
+    class TreeNode {
+    public:
+    T val;
+    TreeNode<T>* left;
+    TreeNode<T>* right;
+
+    TreeNode(T val) {
+        this->val = data;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+**********************************************/
+struct TreeNode <int>* insertValue(struct TreeNode <int>* root, int value, queue<TreeNode <int>*>& q){
+    TreeNode <int>* node=new TreeNode <int>(value);
+    if(root==NULL)
+    root=node;
+
+    else if (q.front()->left == NULL)
+        q.front()->left = node;
+
+    else {
+        q.front()->right = node;
+        q.pop();
+    }
+
+    q.push(node);
+    return root;    
+}
+TreeNode <int>* constructCBT(vector <int> arr)
+{
+    // Write your code here.
+    TreeNode <int>* root=NULL;
+    queue<TreeNode <int>*> q;
+    for(int i=0; i<arr.size(); i++)
+    root=insertValue(root,arr[i],q);
+    return root;
+}
