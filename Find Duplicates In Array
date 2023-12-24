@@ -1,0 +1,24 @@
+#include <bits/stdc++.h> 
+vector < int > findDuplicates(vector < int > & arr, int n) {
+    // Write your code here.
+    if(arr.empty())
+    return{};
+        vector<int> ans;
+        sort(begin(arr),end(arr));
+        int s=arr[0];
+        for(int i=1; i<n; i++){
+            if(!(s^arr[i])){
+                ans.push_back(arr[i]);
+                while(arr[i]==arr[i+1])
+                i=i+1;
+                if(i<n)
+                s=arr[i];
+                else
+                break;
+
+            }
+            else
+            s=arr[i];
+        }
+        return ans;
+}
