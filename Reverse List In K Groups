@@ -1,0 +1,41 @@
+void reverse(Node *temp){
+    Node *curr = temp, *last = NULL, *front = NULL;
+    while(curr){
+        front = curr->next;
+        curr->next = last;
+        last = curr;
+        curr = front;
+    }
+    temp = last;
+    return;
+}
+
+Node *getKthNode(Node *temp, int k){
+    while(temp && --k) temp = temp->next;
+    return temp;
+}
+
+Node* kReverse(Node* head, int k) {
+    Node *temp = head;
+    Node *prevLast = NULL;
+    while(temp){
+        Node *kthNode = getKthNode(temp, k);
+        if(!kthNode){
+            if(prevLast) prevLast->next = temp;
+            break;
+        }
+        Node *nextNode = kthNode->next;
+        kthNode->next = NULL;
+
+        reverse(temp);
+
+        if(temp == head) head = kthNode;
+        else prevLast->next = kthNode;
+
+        temp->next = nextNode;
+
+        prevLast = temp;
+        temp = nextNode;
+    }
+    return head;
+}
