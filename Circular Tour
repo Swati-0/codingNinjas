@@ -1,0 +1,21 @@
+#include <bits/stdc++.h> 
+int firstCircularTour(vector<int>& petrol, vector<int>& distance, int N)
+{
+	// write your code here
+	long long deficiet=0;
+	long long start=0;
+	long long balance=0;
+
+	for(int i=0; i<N; i++){
+		balance+=petrol[i]-distance[i];
+		if(balance<0){
+			deficiet+=balance;
+			start=i+1;
+			balance=0;
+		}
+	}
+	if(deficiet+balance>=0){
+		return start;
+	}
+	return -1;
+}
