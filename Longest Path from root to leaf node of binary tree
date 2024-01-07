@@ -1,0 +1,40 @@
+#include <bits/stdc++.h> 
+/*Structure of the Node of the Binary Tree is
+struct Node
+{
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int val) 
+    {
+        data = val;
+        left = right = NULL;
+    }
+};
+*/
+void solve(Node *root, int sum, int &maxSum, int len, int &maxlen){
+    if(root==NULL){
+        if(len>maxlen){
+            maxlen=len;
+            maxSum=sum;
+        }
+        if(len==maxlen)
+        maxSum=max(sum,maxSum);
+        return;
+    }
+    sum=sum+root->data;
+    solve(root->left, sum, maxSum, len+1, maxlen);
+    solve(root->right, sum, maxSum, len+1, maxlen);
+}
+int longestPath(Node *root)
+{
+    //Write your code here.
+    int len=0;
+    int maxlen=0;
+    int sum=0;
+    int maxSum=INT_MIN;
+    solve(root,sum,maxSum, len,maxlen);
+    return maxSum;
+
+}
