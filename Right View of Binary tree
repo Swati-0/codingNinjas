@@ -1,0 +1,37 @@
+/*************************************************************
+ 
+    Following is the Binary Tree node structure:
+
+    template <typename T>
+
+    class BinaryTreeNode 
+    {
+    public : 
+        T data;
+        BinaryTreeNode<T> *left;
+        BinaryTreeNode<T> *right;
+        BinaryTreeNode(T data) {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+*************************************************************/
+void reversePreorder(BinaryTreeNode<int>* root, int level, vector<int>&ans){
+    if(root==NULL)
+    return;
+    if(level==ans.size())
+    ans.push_back(root->data);
+    
+    reversePreorder(root->right, level+1, ans);
+    reversePreorder(root->left, level+1, ans);
+}
+vector<int> printRightView(BinaryTreeNode<int>* root) {
+    // Write your code here.
+    vector<int> ans;
+    if(root==NULL)
+    return ans;
+    reversePreorder(root,0,ans);
+    return ans;
+}
