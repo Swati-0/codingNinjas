@@ -1,0 +1,88 @@
+/*************************************************************
+    Following is the Binary Serach Tree node structure
+
+    template <typename T>
+    class TreeNode
+    {
+    public :
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T data) {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+
+        ~TreeNode() {
+            if (left)
+                delete left;
+            if (right)
+                delete right;
+        }
+    };
+
+*************************************************************/
+
+TreeNode<int>*inorderToBst(vector<int>inorderVal,int low,int high){
+
+    // base case
+
+    if(low>high) return NULL;
+
+ 
+
+    int mid=(low+high)/2;
+
+ 
+
+    TreeNode<int>*root=new TreeNode<int>(inorderVal[mid]);
+
+    root->left=inorderToBst(inorderVal,low,mid-1);
+
+    root->right=inorderToBst(inorderVal,mid+1,high);
+
+ 
+
+    return root;
+
+}
+
+ 
+
+void inorderTraversal(TreeNode<int>* root,vector<int>&inorderVal){
+
+    if(root==NULL) return ;
+
+ 
+
+    inorderTraversal(root->left,inorderVal);
+
+    inorderVal.push_back(root->data);
+
+    inorderTraversal(root->right,inorderVal);
+
+}
+
+ 
+
+TreeNode<int>* balancedBst(TreeNode<int>* root) {
+
+   vector<int> inorderVal;
+
+   inorderTraversal(root,inorderVal);
+
+ 
+
+   int low=0;
+
+   int high=inorderVal.size()-1;
+
+ 
+
+   TreeNode<int>*ans = inorderToBst(inorderVal,low,high);
+
+   return ans;
+
+}
