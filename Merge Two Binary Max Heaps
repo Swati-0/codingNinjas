@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+void heapify(int i,int size,vector<int>&ans){
+int large=i;
+// n=ans.size();
+int l=2*i+1;
+int r=2*i+2;
+if(l<size && ans[large]<ans[l]){
+large=l;
+}
+
+if(r<size && ans[large]<ans[r]){
+large=r;
+}
+if(large!=i){
+swap(ans[large],ans[i]);
+heapify(large,size,ans);
+}
+}
+
+vector<int> mergeHeap(int n, int m, vector<int> &arr1, vector<int> &arr2) {
+// create new vector ans just insert data of both vector into this
+vector<int>ans;
+for(auto i:arr1){
+ans.push_back(i);
+}
+
+for(auto i:arr2){
+ans.push_back(i);
+}
+
+// build heap from vector 'ans'using "Heappify" -> indfex start from '0'
+
+int size=ans.size();
+
+for(int i=(size/2)-1;i>=0;i--){
+// we initialized i=n/2-1 becaise we are doing '0' based indexing ;
+
+// if we do i=n/2 then it will '1'based indexing and -1 will also insert in vector
+
+heapify(i,size,ans);
+}
+
+return(ans);
+
+}  
