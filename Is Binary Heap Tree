@@ -1,0 +1,158 @@
+#include <bits/stdc++.h> 
+/*************************************************************
+ 
+    Following is the Binary Tree node structure
+
+    class BinaryTreeNode 
+    {
+       public : 
+        T data;
+        BinaryTreeNode<T> *left;
+        BinaryTreeNode<T> *right;
+
+        BinaryTreeNode(T data) 
+        {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+
+        ~BinaryTreeNode() 
+        {
+            if (left)
+            {
+                delete left;
+            }
+            if (right)
+            {
+                delete right;
+            }
+        }
+    };
+
+*************************************************************/
+int count(BinaryTreeNode<int>*root){
+
+if(root==NULL){
+
+return 0;
+
+}
+
+int ans=1+count(root->left)+count(root->right);
+
+ 
+
+return ans;
+
+ 
+
+}
+
+ 
+
+bool isMaxOrder(BinaryTreeNode<int>* root){
+
+if(root->right==NULL && root->left==NULL){
+
+return true;
+
+}
+
+if(root->right==NULL){
+
+return (root->data)>=(root->left->data);
+
+}
+
+else{
+
+bool l=isMaxOrder(root->left);
+
+ 
+
+bool r=isMaxOrder(root->right);
+
+ 
+
+return ((l&&r)&&
+
+(((root->data)>=(root->left->data))
+
+&&((root->data)>=(root->right->data)))
+
+);
+
+ 
+
+}
+
+}
+
+ 
+
+bool isCBT(BinaryTreeNode<int>*root,int i,int tc){
+
+// 1.every leaf node is BST
+
+if(root==NULL){
+
+return true;
+
+}
+
+// we fill node from left in BST
+
+if(i>=tc){
+
+return false;
+
+}
+
+// check BST property
+
+else{
+
+bool l=isCBT(root->left,2*i+1,tc);
+
+ 
+
+bool r=isCBT(root->right,2*i+2,tc);
+
+return (l&&r);
+
+ 
+
+}
+
+ 
+
+}
+
+ 
+
+bool isBinaryHeapTree(BinaryTreeNode<int>* root)
+
+{
+
+// Write your code here.
+
+int i=0;
+
+int tc=count(root);
+
+if(isCBT(root,i,tc) && isMaxOrder(root)){
+
+return true;
+
+}
+
+else{
+
+return false;
+
+}
+
+ 
+
+}
