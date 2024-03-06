@@ -1,0 +1,61 @@
+#include <bits/stdc++.h> 
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    template <typename T>
+    class TreeNode {
+       public:
+        T val;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T val) {
+            this->val = val;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+************************************************************/
+using namespace std;
+
+TreeNode<int>* FindLCA(TreeNode<int>* root,int node1,int node2){
+    if(!root) return root;
+    if(root->val==node1 || root->val==node2) return root;
+    TreeNode<int>* Left=FindLCA(root->left,node1,node2);
+    TreeNode<int>* Right=FindLCA(root->right,node1,node2);
+    if(Left && Right) return root;
+    else if(Left) return Left;
+    else return Right;
+}
+
+int solve(TreeNode<int>* root,int data){
+    if(!root) 
+    return 0;
+    if(root->val==data) 
+    return 1;
+    int Left=solve(root->left,data);
+    int Right=solve(root->right,data);
+    if(Left || Right) 
+    return max(Left,Right)+1;
+    else 
+    return 0;
+
+}
+
+ 
+
+int findDistanceBetweenNodes(TreeNode<int> *root, int node1, int node2){
+    if(root==NULL) 
+    return -1;
+    TreeNode<int>* LCA=FindLCA(root,node1,node2); //LCA
+    if(!LCA) 
+    return -1; //If No LCA exists just return -1
+
+    int dist1=solve(LCA,node1);
+
+    int dist2=solve(LCA,node2);
+    return dist1+dist2-2;
+
+}
