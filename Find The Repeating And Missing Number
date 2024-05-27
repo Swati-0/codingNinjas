@@ -1,0 +1,54 @@
+#include<algorithm>
+
+#include <iostream>
+
+#include <vector>
+
+using namespace std;
+vector<int> findRepeatingAndMissingNumbers(vector<int> nums)
+{
+    // Write your code here.
+    sort(nums.begin(),nums.end());
+
+    vector<int> ans;
+
+    int cnt=0;
+
+    for(int i=0;i<nums.size()-1;i++){
+
+        if(nums[i]==nums[i+1]){
+
+            ans.push_back(nums[i]);
+
+            nums.erase(nums.begin()+i);
+
+            break;
+
+        }   
+
+    }
+
+  
+
+ 
+
+    for(int i = 0; i<nums.size()+1;i++){
+
+        if(nums[i] == i+1  ){
+
+            continue;
+
+        }
+
+        else{
+
+            ans.push_back(i+1);
+
+            break;
+
+        }
+
+    }
+
+    return ans;
+}
