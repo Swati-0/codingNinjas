@@ -1,0 +1,35 @@
+#include <bits/stdc++.h> 
+
+void rearrange(vector<int> &arr)
+{
+	// Write your code here.
+	vector<int> pos;
+	vector<int> neg;
+	for(int i=0; i<arr.size(); i++){
+		if(arr[i]>=0){
+			pos.push_back(arr[i]);
+		}else{
+			neg.push_back(arr[i]);
+		}
+	}
+	int maxsize=max(pos.size(),neg.size());
+	vector<int> largearr;
+	if(maxsize==pos.size()){
+		largearr=pos;
+	}else{
+		largearr=neg;
+	}
+	int minsize=min(pos.size(),neg.size());
+
+	vector<int> newArr;
+	for(int i=0; i<minsize; i++){
+		newArr.push_back(neg[i]);
+		newArr.push_back(pos[i]);
+	}
+	for(int i=minsize; i<maxsize; i++){
+		newArr.push_back(largearr[i]);
+	}
+	for(int i=0; i<newArr.size(); i++){
+		arr[i]=newArr[i];
+	}
+}
