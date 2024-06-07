@@ -1,0 +1,67 @@
+#include <bits/stdc++.h> 
+/*************************************************************
+    
+    Following is the Binary Tree node structure:
+
+	class BinaryTreeNode {
+		
+	public :
+		int data;
+		BinaryTreeNode* left;
+		BinaryTreeNode* right;
+
+		BinaryTreeNode(int data) {
+		this -> left = NULL;
+		this -> right = NULL;
+		this -> data = data;
+		}
+	};
+
+*************************************************************/
+void heapify(vector<int> &arr, int n, int i){
+        int smallest=i;
+        int left=2*i+1;
+        int right=2*i+2;
+        
+        if(left<n && arr[smallest]>arr[left])
+        smallest=left;
+        
+        if(right<n && arr[smallest]>arr[right])
+        smallest=right;
+        
+        if(smallest!=i){
+            swap(arr[smallest],arr[i]);
+            heapify(arr,n,smallest);
+        }
+    }
+
+void inorder(BinaryTreeNode* root, vector<int> &ans){
+	if(root==NULL)
+	return;
+
+	inorder(root->left, ans);
+	ans.push_back(root->data);
+	inorder(root->right, ans);
+}
+
+void fillwithpreorder(BinaryTreeNode* root, vector<int> &ans, int &i){
+	if(root==NULL)
+	return;
+
+	root->data=ans[i++];
+	fillwithpreorder(root->left, ans, i);
+	fillwithpreorder(root->right, ans,i);
+}
+BinaryTreeNode* convertBST(BinaryTreeNode* root)
+{
+	// Write your code here.
+	vector<int> ans;
+	inorder(root,ans);
+	int n=ans.size();
+	for(int i=n/2-1; i>=0; i--)
+	heapify(ans,n,i);
+
+	int i=0;
+	fillwithpreorder(root,ans,i);
+	return root;
+}
