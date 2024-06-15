@@ -1,0 +1,60 @@
+#include<unordered_map>
+#include<stack>
+#include<list>
+void redfs(int node, unordered_map<int,bool> &vis, unordered_map<int,list<int>> &transpose){
+	vis[node]=true;
+	for(auto neigh: transpose[node]){
+		if(!vis[neigh]){
+			redfs(neigh, vis, transpose);
+		}
+	}
+}
+
+void dfs(int node, unordered_map<int,bool> &vis, stack<int>&s, unordered_map<int,list<int>> &adj){
+	vis[node]=true;
+	for(auto neigh: adj[node]){
+		if(!vis[neigh]){
+			dfs(neigh, vis, s, adj);
+		}
+	}
+	s.push(node);
+}
+
+int stronglyConnectedComponents(int v, vector<vector<int>> &edges){
+	// Write your code here.
+	unordered_map<int,list<int>> adj;
+	for(int i=0; i<edges.size(); i++){
+		int u=edges[i][0];
+		int v=edges[i][1];
+		adj[u].push_back(v);
+	}
+
+	stack<int>s;
+	unordered_map<int,bool> vis;
+	for(int i=0; i<v; i++){
+		if(!vis[i]){
+			dfs(i,vis,s,adj);
+		}
+	}
+
+	unordered_map<int,list<int>> transpose;
+	for(int i=0; i<edges.size(); i++){
+		int u=edges[i][0];
+		int v=edges[i][1];
+		transpose[v].push_back(u);
+	}
+
+	for(int i=0; i<v; i++)
+	vis[i]=false;
+
+	int cnt=0;
+	while(!s.empty()){
+		int top=s.top();
+		s.pop();
+		if(!vis[top]){
+			cnt++;
+			redfs(top, vis, transpose);
+		}
+	}
+	return cnt;
+}
