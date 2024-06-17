@@ -1,0 +1,29 @@
+#include <bits/stdc++.h> 
+bool checkPathExists(int v, int e, int source, int destination, vector<vector<int>> &edges) 
+{
+    // Write your code here
+    vector<int> adj[v];
+    for(auto it:edges){
+        adj[it[0]].push_back(it[1]);
+    }
+
+    vector<int> vis(v, 0);
+    vis[source]=1;
+    queue<int> q;
+    q.push(source);
+
+    while(!q.empty()){
+        int node=q.front();
+        q.pop();
+        if(node==destination)
+        return true;
+
+        for(auto it: adj[node]){
+            if(!vis[it]){
+                q.push(it);
+                vis[it]=1;
+            }
+        }
+    }
+    return false;
+}
