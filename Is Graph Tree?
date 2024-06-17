@@ -1,0 +1,52 @@
+#include <bits/stdc++.h> 
+bool dfs(vector<vector<int>>& graph, vector<bool>& vis, int src, int par){
+
+    vis[src]=true;
+
+    for(int nbr : graph[src]){
+
+        if(vis[nbr] && nbr!=par) return true;
+
+        if(!vis[nbr] && dfs(graph, vis, nbr, src)) return true;
+
+    }
+
+ 
+
+    return false;
+
+}
+
+ 
+
+bool isGraphTree(int n, vector<vector<int>> &edgeList)
+
+{
+
+    vector<vector<int>> graph(n);
+
+    for(auto edge : edgeList){
+
+        graph[edge[0]].push_back(edge[1]);
+
+        graph[edge[1]].push_back(edge[0]);
+
+    }
+
+    vector<bool> vis(n, false);
+
+    for(int src=0;src<n;src++){
+
+        if(!vis[src]){
+
+            if(dfs(graph, vis, src, -1)) return false;
+
+        }
+
+    }
+
+ 
+
+    return true;
+
+}
