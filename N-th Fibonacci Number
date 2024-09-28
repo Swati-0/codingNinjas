@@ -1,0 +1,16 @@
+#include <bits/stdc++.h> 
+int fibonacciNumber(int n){
+    // Write your code here.
+    int mod=1e9+7;
+    int first=1;
+    int second=1;
+    int ans=1;
+    int i=3;
+    while(i<=n){
+        ans=(first+second)%mod;
+        first=second%mod;
+        second=ans%mod;
+        i++;
+    }
+    return ans%mod;
+}
