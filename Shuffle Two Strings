@@ -1,0 +1,57 @@
+#include <bits/stdc++.h> 
+bool isInterleave(string a, string b, string c){
+	//Your code goes here
+	int n1=a.size();
+	int n2=b.size();
+	int n3=c.size();
+
+	if(n3!=n1+n2)
+	return false;
+
+	stack<char> sa;
+	stack<char> sb;
+	stack<char> sc;
+
+	for(int i=0; i<a.length(); i++)
+	sa.push(a[i]);
+
+	for(int i=0; i<b.length(); i++)
+	sb.push(b[i]);
+
+	for(int i=0; i<c.length(); i++)
+	sc.push(c[i]);
+
+	while(sa.empty()==false && sb.empty()==false && sc.empty()==false){
+		if(sb.top()==sc.top())
+		sb.pop();
+		else if(sa.top()==sc.top())
+		sa.pop();
+		else
+		return false;
+		sc.pop();
+	}
+
+	if(sa.empty()==true && sb.empty()==false){
+		while(sb.empty()==false && sc.empty()==false){
+			if(sb.top()==sc.top()){
+				sb.pop();
+				sc.pop();
+			}else{
+				return false;
+			}
+		}
+	}else if(sb.empty()==true && sa.empty()==false){
+		while(sa.empty()==false && sc.empty()==false){
+			if(sa.top()==sc.top()){
+				sa.pop();
+				sc.pop();
+			}else{
+				return false;
+			}
+		}
+	}
+	if(sa.empty()==true && sb.empty()==true && sc.empty()==true){
+		return true;
+	}
+	return false;
+}
