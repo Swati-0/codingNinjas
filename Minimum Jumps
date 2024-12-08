@@ -1,0 +1,17 @@
+int minimumJumps(vector<int> &arr, int n)
+{
+    // write your code here
+    int curr=0;
+    int far=0;
+    int cnt=0;
+    for(int i=0; i<n-1; i++){
+        far=max(far,arr[i]+i);
+        if(far==i)
+        return -1;
+        if(i==curr){
+            curr=far;
+            cnt++;
+        }
+    }
+    return cnt;
+}
